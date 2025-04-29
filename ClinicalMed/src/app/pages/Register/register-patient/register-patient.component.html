@@ -1,0 +1,35 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__container">
+    <div class="register__Container">
+        
+        <!--Ocupa 40% da tela -->
+        <div class="register__Container__presentation">
+            <img src="LogoPaginaInicial.png" alt="Logo aplicativo">
+            <h1 class="h1_presentation">CuidaApp</h1>
+            <h2 class="h2_presentation">TeleEnfermagem</h2>
+        </div>
+        
+        <!--Ocupa 60% da tela -->
+        
+        <div class="register__Container__input">
+            <div class="register__Container__input__title">
+                <h1>Bem-vindo a sua rede de saúde</h1>
+                <p>Faça Login para acessar sua conta</p>
+            </div>
+
+            <div class="register__Container__input__types">
+                <input type="email" placeholder="📧Email" formControlName="email">
+                <input type="password" placeholder="🔒Senha" formControlName="password">
+
+                <label>
+                    Você é enfermeiro(a)?
+                    <input type="checkbox" formControlName="typeUser" />
+                </label>
+            </div>
+           
+            <button >Entrar</button>
+            <button>Registrar-se</button>
+
+        </div>
+
+    </div>
+</form>
