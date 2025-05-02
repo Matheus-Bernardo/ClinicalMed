@@ -23,6 +23,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class RegisterPatientComponent {
 
   registerForm: FormGroup;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,7 +52,7 @@ export class RegisterPatientComponent {
   }
 
   onSubmit() {
-
+    this.isLoading = true;
     const dataToSend = this.mapFormToPatientData();
 
     const response = CreatePatient(dataToSend).then((res) => {
@@ -61,6 +62,9 @@ export class RegisterPatientComponent {
       .catch((error) => {
         this.toastr.error(error, 'Erro ao cadastrar')
       })
+      .finally(()=>{
+        this.isLoading = false;
+      });
 
   }
 
