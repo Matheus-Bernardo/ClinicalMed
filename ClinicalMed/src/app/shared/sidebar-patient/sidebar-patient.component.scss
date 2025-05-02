@@ -1,0 +1,103 @@
+.welcome-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #3b9173;
+  color: white;
+  width: 60px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+
+  &.expanded {
+    width: 200px;
+  }
+
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 1rem;
+      align-self: flex-start;
+      transition: transform 0.3s ease;
+
+      &.rotated {
+        transform: rotate(90deg);
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 0.6rem 1rem;
+        cursor: pointer;
+
+        .icon {
+          margin-right: 0.5rem;
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+
+  .version-box {
+    padding: 1rem 0;
+    font-size: 0.8rem;
+    color: #ffffffb3;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  margin-left: 60px;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #013f29;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #333;
+  }
+}
+
+// Se a sidebar estiver expandida, empurra o conteúdo
+.welcome-container.sidebar-expanded {
+  .main-content {
+    margin-left: 200px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .sidebar {
+    &.expanded {
+      width: 125px; // substitui 200px apenas no mobile
+    }
+  }
+}

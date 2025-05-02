@@ -1,0 +1,49 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__container">
+    <div class="register__Container">
+
+        <!--Ocupa 40% da tela -->
+        <div class="register__Container__presentation">
+            <img src="LogoPaginaInicial.png" alt="Logo aplicativo">
+            <h1 class="h1_presentation">CuidaApp</h1>
+            <h2 class="h2_presentation">TeleEnfermagem</h2>
+        </div>
+
+        <!--Ocupa 60% da tela -->
+
+        <div class="register__Container__input">
+            <div class="register__Container__input__title">
+                <h1>Preencha os dados para se registrar</h1>
+            </div>
+
+            <div class="register__Container__input__types">
+                <input type="text" placeholder="Primeiro nome" formControlName="firstName">
+                <input type="text" placeholder="Último nome" formControlName="lastName">
+                <input type="cpf" placeholder="Cpf, ex: 155.155.155-81" formControlName="cpf" mask="000.000.000-00">
+                <input type="date" formControlName="birthDate">
+                <input type="text" placeholder="telefone, ex: (35) 9 9977-8855" formControlName="phone" mask="(00) 0 0000-0000" >
+                <input type="text" placeholder="Rua" formControlName="street">
+                <input type="text" placeholder="Bairro" formControlName="district">
+                <input type="text" placeholder="Cidade" formControlName="city">
+                <input type="text" placeholder="Complemento: Ex: casa" formControlName="complement">
+                <input type="text" placeholder="Email" formControlName="email">
+                <input type="password" placeholder="Senha" formControlName="password">
+                <input type="password" placeholder="Confirme sua senha" formControlName="confirmedPassword">
+                <div *ngIf="registerForm.value.password !== registerForm.value.confirmedPassword && registerForm.get('confirmedPassword')?.touched" style="color: red; font-size: 0.8rem;">
+                    As senhas não coincidem
+                </div>
+                <input type="text" placeholder="Telefone para contato" formControlName="messagePhone" mask="(00) 0 0000-0000">
+                <input type="text" placeholder="Cartão do Sus" formControlName="susCard">
+                <input type="text" placeholder="Histórico de doença da família (separe por vírgula)" formControlName="familyHistoryDisease">
+                <input type="text" placeholder="Planos de saúde (separe por vírgula)" formControlName="medicalAgreements">
+
+            </div>
+
+            <button
+                [disabled]="registerForm.invalid || registerForm.value.password !== registerForm.value.confirmedPassword">Cadastrar
+            </button>
+            <button type="button" (click)="goToLogin()">Fazer Login</button>
+
+        </div>
+
+    </div>
+</form>
