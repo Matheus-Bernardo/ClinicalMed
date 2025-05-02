@@ -8,8 +8,6 @@ import {RegisterPatientComponent} from './pages/Register/register-patient/regist
   standalone:true,
   imports: [
     RouterOutlet,
-    LoginComponent,
-    RegisterPatientComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

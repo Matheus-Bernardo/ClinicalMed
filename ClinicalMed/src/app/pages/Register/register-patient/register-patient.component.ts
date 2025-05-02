@@ -1,10 +1,22 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { CreatePatient } from '../../../../Services/registerPatient.service';
+import { ICreatePatient } from '../../../../Intefaces/Patient/PatientRegister';
+import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-register-patient',
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    NgxMaskDirective
+  ],
+  providers: [provideNgxMask()],
   templateUrl: './register-patient.component.html',
   styleUrl: './register-patient.component.scss'
 })
@@ -12,14 +24,63 @@ export class RegisterPatientComponent {
 
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,){
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
     this.registerForm = this.formBuilder.group({
-      email:[''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      cpf: ['', Validators.required],
+      birthDate: ["", Validators.required],
+      phone: ["", Validators.required],
+      street: ["", Validators.required],
+      district: ["", Validators.required],
+      city: ["", Validators.required],
+      complement: [""],
+      email: ["", Validators.required],
+      password: ["", Validators.minLength(6)],
+      confirmedPassword: ["", Validators.required],
+      messagePhone: ["", Validators.required],
+      susCard: ["", Validators.required],
+      familyHistoryDisease: [''],
+      medicalAgreements: ['']
+
     })
   }
 
-  onSubmit(){
+  onSubmit() {
+
+    const dataToSend = this.mapFormToPatientData();
+
+    const response = CreatePatient(dataToSend).then((res) => {
+      this.toastr.success('Cadastro realizado com sucesso!');
+      this.registerForm.reset()
+    })
+      .catch((error) => {
+        this.toastr.error(error, 'Erro ao cadastrar')
+      })
 
   }
+
+  private mapFormToPatientData(): ICreatePatient {
+    const formValues = this.registerForm.value;
+
+    return {
+      ...formValues,
+      familyHistoryDisease: formValues.familyHistoryDisease
+        ? formValues.familyHistoryDisease.split(',').map((s: string) => s.trim())
+        : [],
+      medicalAgreements: formValues.medicalAgreements
+        ? formValues.medicalAgreements.split(',').map((s: string) => s.trim())
+        : []
+    };
+  }
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
 
 }

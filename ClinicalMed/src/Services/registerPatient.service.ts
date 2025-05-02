@@ -1,10 +1,11 @@
-import { login } from '../api/endpoints/auth.api';
+import { RegisterPatient } from '../api/endpoints/registerPatient.api';
+import { ICreatePatient } from '../Intefaces/Patient/PatientRegister'
 
-export async function loginUser(email: string, password: string, typeUser: number) {
+
+export async function CreatePatient(dataPatientCreate: ICreatePatient) {
+
     try {
-        const response = await login({ email, password, typeUser });
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('name',response.data.firstName)
+        const response = await RegisterPatient(dataPatientCreate);
         return response.data;
     } catch (error: any) {
         if (error.response?.status === 400) {
@@ -13,6 +14,6 @@ export async function loginUser(email: string, password: string, typeUser: numbe
             console.error('Erro inesperado:', error);
             throw new Error('Erro inesperado. Tente novamente mais tarde.');
         }
-
     }
+
 }

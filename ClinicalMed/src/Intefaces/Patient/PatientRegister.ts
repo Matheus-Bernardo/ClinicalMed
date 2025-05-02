@@ -1,0 +1,18 @@
+export interface ICreatePatient {
+    firstName:string,
+    lastName:string,
+    cpf:string,
+    birthDate:Date,
+    phone:string,
+    street:string,
+    district:string,
+    city:string,
+    complement:string,
+    email:string,
+    password:string,
+    confirmedPassword:string,
+    messagePhone:string,
+    susCard:string,
+    familyHistoryDisease:Array<string>,
+    medicalAgreements:Array<string>,
+}
