@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,6 +29,9 @@ export class LoginComponent {
   }
 
   onSubmit() {
+
+    this.isLoading = true;
+
     const { email, password, typeUser: rawTypeUser } = this.loginForm.value;
     const typeUser = rawTypeUser === false ? 1 : 2;
   
