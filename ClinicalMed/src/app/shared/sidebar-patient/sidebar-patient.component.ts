@@ -14,9 +14,22 @@ export class SidebarPatientComponent {
   @Input() isExpanded = true;
   @Input() version = environmentVersion.version;
 
+  idPatient:number|null = null;
+
   constructor(private router: Router){
     
   }
+  ngOnInit(): void {
+    if (typeof window !== 'undefined') {
+      const idValue = localStorage.getItem('id');
+      this.idPatient = idValue !== null ? Number(idValue) : null;
+
+    }
+  }
+   gotoDetailsClient(): void {
+    this.router.navigate(['/info-patient']);
+  }
+
   
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;

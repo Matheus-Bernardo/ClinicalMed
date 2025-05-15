@@ -3,8 +3,8 @@ import { login } from '../api/endpoints/auth.api';
 export async function loginUser(email: string, password: string, typeUser: number) {
     try {
         const response = await login({ email, password, typeUser });
-        localStorage.setItem('token', response.data.token);
         localStorage.setItem('name',response.data.firstName)
+        localStorage.setItem('id',response.data.id)
         return response.data;
     } catch (error: any) {
         if (error.response?.status === 400) {

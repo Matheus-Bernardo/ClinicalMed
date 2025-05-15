@@ -1,0 +1,26 @@
+<form *ngIf="patientForm" [formGroup]="patientForm" class="container__infos">
+  <app-sidebar-patient></app-sidebar-patient>
+
+  <div class="content">
+    <h1>
+      {{ namePatient }},<br />
+      Aqui você pode alterar seus dados mais importantes
+    </h1>
+
+    <div class="container__infos_patient" *ngFor="let field of formFields">
+      <div class="field-group">
+        <input
+          type="text"
+          [formControlName]="field.controlName"
+          [placeholder]="field.placeholder"
+        />
+        <div class="field-actions">
+          <button type="button" (click)="editField(field.controlName)">✎</button>
+          <button type="button" (click)="cancelEdit(field.controlName)">✖</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="save-button">Salvar edições</button>
+  </div>
+</form>

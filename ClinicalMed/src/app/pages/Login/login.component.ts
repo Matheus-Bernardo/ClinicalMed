@@ -47,6 +47,7 @@ export class LoginComponent {
       })
       .catch((error) => {         
           this.toastr.error(error,'Erro ao fazer login');
+          this.isLoading = false;
       });
 
   }
