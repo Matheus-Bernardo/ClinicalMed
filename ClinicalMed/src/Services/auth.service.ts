@@ -4,6 +4,7 @@ export async function loginUser(email: string, password: string, typeUser: numbe
     try {
         const response = await login({ email, password, typeUser });
         localStorage.setItem('name',response.data.firstName)
+        localStorage.setItem('id',response.data.id)
         return response.data;
     } catch (error: any) {
         if (error.response?.status === 400) {

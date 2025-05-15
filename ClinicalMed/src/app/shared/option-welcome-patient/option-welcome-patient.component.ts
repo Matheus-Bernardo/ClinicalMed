@@ -1,5 +1,6 @@
 import { Component,Input } from '@angular/core';
 
+
 @Component({
   selector: 'app-option-welcome-patient',
   imports: [],
@@ -7,5 +8,9 @@ import { Component,Input } from '@angular/core';
   styleUrl: './option-welcome-patient.component.scss'
 })
 export class OptionWelcomePatientComponent {
+
+   
+
+  
 
 }
