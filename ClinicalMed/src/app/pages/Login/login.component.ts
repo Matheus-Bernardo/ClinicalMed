@@ -42,7 +42,7 @@ export class LoginComponent {
         if(typeUser === 1){
           this.router.navigate(['/welcomePatient']);
         }else{
-          return;
+          this.router.navigate(['/welcomeDoctor']);
         }
       })
       .catch((error) => {         
