@@ -1,4 +1,4 @@
-<form *ngIf="patientForm" [formGroup]="patientForm" (ngSubmit)="onSubmit()" class="container__infos">
+<form *ngIf="formSelected" [formGroup]="formSelected" (ngSubmit)="onSubmit()" class="container__infos">
   <app-sidebar-patient></app-sidebar-patient>
 
   <div class="content">
@@ -7,9 +7,17 @@
       Aqui você pode alterar seus dados mais importantes
     </h1>
 
-    <div class="container__infos_patient" *ngFor="let field of formFields">
+    <div 
+      class="container__infos_patient" 
+      *ngFor="let field of roleUser === 'doctor' ? formFieldsDoctor : formFieldsPatient">
+      
       <div class="field-group">
-        <input type="text" [formControlName]="field.controlName" [placeholder]="field.placeholder" />
+        <input 
+          type="text" 
+          [formControlName]="field.controlName" 
+          [placeholder]="field.placeholder" 
+        />
+
         <div class="field-actions">
           <button type="button" (click)="editField(field.controlName)">✎</button>
           <button type="button" (click)="cancelEdit(field.controlName)">✖</button>
@@ -17,9 +25,11 @@
       </div>
     </div>
 
-    <button type="submit" class="save-button" [disabled]="isSaveDisabled">
+    <button 
+      type="submit" 
+      class="save-button" 
+      [disabled]="isSaveDisabled">
       Salvar edições
     </button>
-
   </div>
 </form>

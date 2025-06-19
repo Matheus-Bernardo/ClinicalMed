@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { environmentVersion } from '../../../../environments/version';
-import { SidebarPatientComponent } from "../../../shared/sidebar-patient/sidebar-patient.component";
+import { SidebarDoctorComponent } from '../../../shared/sidebar-doctor/sidebar-doctor.component';
 import { OptionWelcomeDoctorComponent } from "../../../shared/option-welcome-doctor/option-welcome-doctor.component";
 
 @Component({
   selector: 'app-welcome-doctor',
-  imports: [SidebarPatientComponent, OptionWelcomeDoctorComponent],
+  imports: [SidebarDoctorComponent, OptionWelcomeDoctorComponent],
   templateUrl: './welcome-doctor.component.html',
   styleUrl: './welcome-doctor.component.scss'
 })

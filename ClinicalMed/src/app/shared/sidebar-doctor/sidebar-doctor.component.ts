@@ -1,33 +1,31 @@
-import { Component,Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { environmentVersion } from '../../../environments/version';
-import { Logout } from '../../../Services/logout.service';
 import { Router } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { Component,Input } from '@angular/core';
+import { Logout } from '../../../Services/logout.service';
+import { environmentVersion } from '../../../environments/version';
 @Component({
-  selector: 'app-sidebar-patient',
+  selector: 'app-sidebar-doctor',
   imports: [CommonModule],
-  templateUrl: './sidebar-patient.component.html',
-  styleUrl: './sidebar-patient.component.scss'
+  templateUrl: './sidebar-doctor.component.html',
+  styleUrl: './sidebar-doctor.component.scss'
 })
-export class SidebarPatientComponent {
+export class SidebarDoctorComponent {
   @Input() isExpanded = true;
   @Input() version = environmentVersion.version;
 
-  idPatient:number|null = null;
+  idDoctor:number|null = null;
 
-  constructor(private router: Router){
-    
-  }
+  constructor(private router:Router){}
+
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       const idValue = localStorage.getItem('id');
-      this.idPatient = idValue !== null ? Number(idValue) : null;
+      this.idDoctor = idValue !== null ? Number(idValue) : null;
 
     }
   }
-  
-  gotoDetailsClient(): void {
+
+  gotoDetailsDoctor(): void {
     this.router.navigate(['/info-user']);
   }
 
@@ -41,4 +39,5 @@ export class SidebarPatientComponent {
     this.router.navigate(['/login']);
     
   }
+
 }
