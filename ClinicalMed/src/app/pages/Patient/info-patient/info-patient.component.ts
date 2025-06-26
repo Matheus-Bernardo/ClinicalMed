@@ -1,8 +1,10 @@
+import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { getPatientByIdService } from '../../../../Services/getPatientById.service';
 import { SidebarPatientComponent } from '../../../shared/sidebar-patient/sidebar-patient.component';
-import { CommonModule } from '@angular/common';
+import { updatePatientService } from '../../../../Services/updatePatient.service';
 
 @Component({
   selector: 'app-info-patient',
@@ -31,7 +33,7 @@ export class InfoPatientComponent implements OnInit {
     { controlName: 'novaSenha', placeholder: 'Nova Senha' }
   ];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private toastr: ToastrService) { }
 
   async ngOnInit(): Promise<void> {
     if (typeof window !== 'undefined') {
@@ -48,6 +50,49 @@ export class InfoPatientComponent implements OnInit {
     } else {
       console.warn('Id do paciente não encontrado no localStorage!');
     }
+  }
+  async onSubmit(): Promise<void> {
+    if (this.idPatient !== null) {
+      const payload: any = {};
+
+      Object.keys(this.editableFields).forEach((key) => {
+        if (this.editableFields[key]) {
+          const value = this.patientForm.get(key)?.value;
+          if (value !== undefined) {
+            payload[key] = value;
+          }
+        }
+      });
+
+      if (Object.keys(payload).length === 0) {
+        console.warn('Nenhum campo foi alterado!');
+        return;
+      }
+      
+      try {
+        const response = await updatePatientService(this.idPatient, payload);
+        console.log('Paciente atualizado com sucesso!', response);
+        this.toastr.success('As suas informações foram atualizadas com sucesso!')
+
+        Object.keys(this.editableFields).forEach((key) => {
+          if (this.editableFields[key]) {
+            this.editableFields[key] = false;
+            this.patientForm.get(key)?.disable();
+          }
+        });
+
+      } catch (error: any) {
+        this.toastr.error(error, 'Erro ao fazer login');
+        console.error(error.message);
+      }
+    } else {
+      console.warn('ID do paciente não encontrado');
+    }
+  }
+
+
+  get isSaveDisabled(): boolean {
+    return !Object.values(this.editableFields).some(value => value === true);
   }
 
 
