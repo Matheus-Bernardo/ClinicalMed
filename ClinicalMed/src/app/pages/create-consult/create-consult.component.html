@@ -1,0 +1,59 @@
+<div class="welcome-container" [class.sidebar-expanded]="isSidebarExpanded">
+  <app-sidebar-doctor [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-doctor>
+
+  <div class="main-content">
+    <div class="calendar-container">
+      <h2>Agendamento de Consultas</h2>
+
+      <div class="calendar-container-input">
+        <label>
+          Informe a área de consulta:
+          <input type="text" />
+        </label>
+
+        <label>
+          Informe a enfermeira de sua preferência:
+          <input type="text" />
+        </label>
+
+        <label>
+          Tipo de Atendimento:
+          <input type="number" />
+        </label>
+
+        <label>
+          Médico:
+          <input type="number" />
+        </label>
+
+        <label>
+          Paciente:
+          <input type="number" />
+        </label>
+
+        <label>
+          Desconto (%):
+          <input type="number" step="0.1" />
+        </label>
+      </div>
+
+      <div class="calendar-container-input-calendar">
+        <div class="calendar-navigation">
+          <button (click)="previousWeek()">Semana Anterior</button>
+          <button (click)="today()">Hoje</button>
+          <button (click)="nextWeek()">Próxima Semana</button>
+        </div>
+
+        <mwl-calendar-week-view
+          [viewDate]="viewDate"
+          [events]="events"
+          (hourSegmentClicked)="handleHourSegmentClick($event)"
+          [hourSegments]="2"
+          [dayStartHour]="8"
+          [dayEndHour]="18"
+          [locale]="locale">
+        </mwl-calendar-week-view>
+      </div>
+    </div>
+  </div>
+</div>
