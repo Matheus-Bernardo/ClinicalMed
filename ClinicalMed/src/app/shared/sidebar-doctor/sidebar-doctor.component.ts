@@ -40,4 +40,8 @@ export class SidebarDoctorComponent {
     
   }
 
+  goToWelcomeDoctor(){
+    this.router.navigate(['/welcomeDoctor']);
+  }
+
 }

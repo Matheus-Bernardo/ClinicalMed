@@ -5,38 +5,6 @@
     <div class="calendar-container">
       <h2>Agendamento de Consultas</h2>
 
-      <div class="calendar-container-input">
-        <label>
-          Informe a área de consulta:
-          <input type="text" />
-        </label>
-
-        <label>
-          Informe a enfermeira de sua preferência:
-          <input type="text" />
-        </label>
-
-        <label>
-          Tipo de Atendimento:
-          <input type="number" />
-        </label>
-
-        <label>
-          Médico:
-          <input type="number" />
-        </label>
-
-        <label>
-          Paciente:
-          <input type="number" />
-        </label>
-
-        <label>
-          Desconto (%):
-          <input type="number" step="0.1" />
-        </label>
-      </div>
-
       <div class="calendar-container-input-calendar">
         <div class="calendar-navigation">
           <button (click)="previousWeek()">Semana Anterior</button>
@@ -54,6 +22,39 @@
           [locale]="locale">
         </mwl-calendar-week-view>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Customizado -->
+<div *ngIf="visible" class="custom-modal-overlay">
+  <div class="custom-modal">
+    <h3>Novo Agendamento</h3>
+    <p>Preencha as informações abaixo:</p>
+
+    <label>
+      Tipo de Atendimento:
+      <input type="number" [(ngModel)]="tipoAtendimento" />
+    </label>
+
+    <label>
+      Informe a enfermeira de sua preferência:
+      <input type="text" [(ngModel)]="enfermeira" />
+    </label>
+
+    <label>
+      Paciente:
+      <input type="number" [(ngModel)]="paciente" />
+    </label>
+
+    <label>
+      Desconto (%):
+      <input type="number" step="0.1" [(ngModel)]="desconto" />
+    </label>
+
+    <div class="modal-buttons">
+      <button (click)="visible = false">Cancelar</button>
+      <button (click)="saveEvent()">Salvar</button>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-option-welcome-doctor',
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class OptionWelcomeDoctorComponent {
 
+  constructor(private router:Router){}
+
+  navigateToCreateConsult(){
+    this.router.navigate(['/create-consult'])
+  }
 }
