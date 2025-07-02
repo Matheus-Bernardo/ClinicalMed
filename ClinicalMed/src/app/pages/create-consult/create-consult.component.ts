@@ -1,10 +1,11 @@
 import { FormsModule } from '@angular/forms';
 import { addWeeks, subWeeks } from 'date-fns';
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { environmentVersion } from '../../../environments/version';
 import { CalendarEvent, CalendarModule, } from 'angular-calendar';
 import { SidebarDoctorComponent } from '../../shared/sidebar-doctor/sidebar-doctor.component';
+import { getTypeAppointmentService } from '../../../Services/getTypeAppointmentMedical.service';
 
 
 
@@ -22,7 +23,7 @@ import { SidebarDoctorComponent } from '../../shared/sidebar-doctor/sidebar-doct
 })
 
 
-export class CreateConsultComponent {
+export class CreateConsultComponent implements OnInit {
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
 
@@ -30,13 +31,26 @@ export class CreateConsultComponent {
   version = environmentVersion.version;
   visible = false;
   selectedDate: Date | null = null; 
-  tipoAtendimento: number | null = null;
-  enfermeira: string = '';
-  paciente: number | null = null;
-  desconto: number | null = null;
+  typesAppointment: any[] = [];
+  selectedTypeAppointmentId: number | null = null;
+  doctor: string = '';
+  patient: number | null = null;
+  descont: number | null = null;
 
 
   constructor(@Inject(LOCALE_ID) public locale: string) { }
+
+  ngOnInit(): void {
+  this.loadTypesAppointment();
+}
+
+async loadTypesAppointment() {
+  try {
+    this.typesAppointment = await getTypeAppointmentService();
+  } catch (error) {
+    console.error('Erro ao carregar tipos de atendimento:', error);
+  }
+}
 
 
   nextWeek(): void {

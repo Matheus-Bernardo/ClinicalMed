@@ -148,3 +148,25 @@
   box-sizing: border-box;
 }
 
+.custom-modal select {
+  width: 100%;
+  padding: 0.4rem;
+  margin-top: 0.25rem;
+  box-sizing: border-box;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background-color: #d4ddd4;
+  color: #333;
+  font-size: 14px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='292.362'%20height='292.362'%3E%3Cpath%20fill='%23333'%20d='M287%2069.245l-14.273-14.273c-4.094-4.094-10.735-4.094-14.828%200L146.181%20166.69%2034.462%2054.972c-4.094-4.094-10.735-4.094-14.828%200L5.361%2069.245c-4.094%204.094-4.094%2010.735%200%2014.828l127.002%20127.002c4.094%204.094%2010.735%204.094%2014.828%200L287%2084.073c4.094-4.094%204.094-10.735%200-14.828z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 0.65rem;
+}
+
+.custom-modal select:focus {
+  outline: none;
+  border-color: #2e7355;
+  box-shadow: 0 0 0 2px rgba(46, 115, 85, 0.3);
+}

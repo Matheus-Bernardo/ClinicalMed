@@ -12,13 +12,8 @@
           <button (click)="nextWeek()">Próxima Semana</button>
         </div>
 
-        <mwl-calendar-week-view
-          [viewDate]="viewDate"
-          [events]="events"
-          (hourSegmentClicked)="handleHourSegmentClick($event)"
-          [hourSegments]="2"
-          [dayStartHour]="8"
-          [dayEndHour]="18"
+        <mwl-calendar-week-view [viewDate]="viewDate" [events]="events"
+          (hourSegmentClicked)="handleHourSegmentClick($event)" [hourSegments]="2" [dayStartHour]="8" [dayEndHour]="18"
           [locale]="locale">
         </mwl-calendar-week-view>
       </div>
@@ -34,22 +29,28 @@
 
     <label>
       Tipo de Atendimento:
-      <input type="number" [(ngModel)]="tipoAtendimento" />
+      <select [(ngModel)]="selectedTypeAppointmentId">
+        <option [ngValue]="null">Selecione</option>
+        <option *ngFor="let type of typesAppointment" [ngValue]="type.id">
+          {{ type.description }}
+        </option>
+      </select>
     </label>
+
 
     <label>
       Informe a enfermeira de sua preferência:
-      <input type="text" [(ngModel)]="enfermeira" />
+      <input type="text" [(ngModel)]="doctor" />
     </label>
 
     <label>
       Paciente:
-      <input type="number" [(ngModel)]="paciente" />
+      <input type="number" [(ngModel)]="patient" />
     </label>
 
     <label>
       Desconto (%):
-      <input type="number" step="0.1" [(ngModel)]="desconto" />
+      <input type="number" step="0.1" [(ngModel)]="descont" />
     </label>
 
     <div class="modal-buttons">
