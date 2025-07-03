@@ -1,12 +1,14 @@
 import { FormsModule } from '@angular/forms';
 import { addWeeks, subWeeks } from 'date-fns';
 import { CommonModule } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { environmentVersion } from '../../../environments/version';
+import { isPlatformBrowser } from '@angular/common';
 import { CalendarEvent, CalendarModule, } from 'angular-calendar';
+import { environmentVersion } from '../../../environments/version';
+import { getDoctorsService } from '../../../Services/getDoctors.service';
+import { getPatientsService } from '../../../Services/getPatients.service';
+import { Component, Inject, LOCALE_ID, OnInit,PLATFORM_ID } from '@angular/core';
 import { SidebarDoctorComponent } from '../../shared/sidebar-doctor/sidebar-doctor.component';
 import { getTypeAppointmentService } from '../../../Services/getTypeAppointmentMedical.service';
-
 
 
 @Component({
@@ -30,28 +32,62 @@ export class CreateConsultComponent implements OnInit {
   isSidebarExpanded = true;
   version = environmentVersion.version;
   visible = false;
-  selectedDate: Date | null = null; 
+
+
+  ListDoctors:any[]=[];
+  ListPatients:any[]=[];
+  doctor: string|null = '';
+  patient: string | null = '';
   typesAppointment: any[] = [];
-  selectedTypeAppointmentId: number | null = null;
-  doctor: string = '';
-  patient: number | null = null;
   descont: number | null = null;
+  selectedDate: Date | null = null;
+  selectedTypeAppointmentId: number | null = null;
+  roleuserActivite: string|null= localStorage.getItem("role");
 
-
-  constructor(@Inject(LOCALE_ID) public locale: string) { }
+  constructor(
+    @Inject(LOCALE_ID) public locale: string,
+    @Inject(PLATFORM_ID) private platformId: Object,) { }
 
   ngOnInit(): void {
-  this.loadTypesAppointment();
-}
-
-async loadTypesAppointment() {
-  try {
-    this.typesAppointment = await getTypeAppointmentService();
-  } catch (error) {
-    console.error('Erro ao carregar tipos de atendimento:', error);
+    if (isPlatformBrowser(this.platformId)) {
+    this.roleuserActivite = localStorage.getItem("role");
+      if(this.roleuserActivite == "doctor"){
+        this.doctor = localStorage.getItem('name');
+      }else{
+        this.patient = localStorage.getItem('name');
+      }
+    }
+    
+    this.loadTypesAppointment();
+    this.loadDoctors();
+    this.loadPatients();
+    
   }
-}
 
+  async loadTypesAppointment() {
+    try {
+      this.typesAppointment = await getTypeAppointmentService();
+    } catch (error) {
+      console.error('Erro ao carregar tipos de atendimento:', error);
+    }
+  }
+
+  async loadDoctors(){
+    try {
+      this.ListDoctors = await getDoctorsService();
+    } catch (error) {
+      console.error("Erro ao carregar lista de médicos no componente",error);
+    }
+  }
+
+  async loadPatients(){
+    try {
+      this.ListPatients = await getPatientsService();
+    } catch (error) {
+      console.error("Erro ao carregar lista de pacientes no componente",error);
+    }
+  }
+  
 
   nextWeek(): void {
     this.viewDate = addWeeks(this.viewDate, 1);
@@ -66,7 +102,7 @@ async loadTypesAppointment() {
   }
   handleHourSegmentClick(event: any) {
     this.selectedDate = event.date;
-    this.visible = true; 
+    this.visible = true;
   }
 
   saveEvent() {

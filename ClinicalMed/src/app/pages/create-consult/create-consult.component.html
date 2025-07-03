@@ -37,16 +37,37 @@
       </select>
     </label>
 
-
-    <label>
-      Informe a enfermeira de sua preferência:
-      <input type="text" [(ngModel)]="doctor" />
+    <label *ngIf="roleuserActivite === 'doctor'">
+      Enfermeira(o) da consulta:
+      <input type="text" [(ngModel)]="doctor" disabled />
     </label>
 
-    <label>
+    <label *ngIf="roleuserActivite !== 'doctor'">
+      Informe o médico de sua preferência:
+      <select [(ngModel)]="doctor">
+        <option [ngValue]="null">Selecione</option>
+        <option *ngFor="let med of ListDoctors" [ngValue]="med.id">
+          {{ med.firstName }}
+        </option>
+      </select>
+    </label>
+
+
+    <label *ngIf="roleuserActivite === 'doctor'">
+      Escolha um paciente:
+      <select [(ngModel)]="patient">
+        <option [ngValue]="null">Selecione</option>
+        <option *ngFor="let patient of ListPatients" [ngValue]="patient.id">
+          {{ patient.firstName }}
+        </option>
+      </select>
+    </label>
+
+    <label *ngIf="roleuserActivite != 'doctor'">
       Paciente:
-      <input type="number" [(ngModel)]="patient" />
+      <input type="text" [(ngModel)]="patient" disabled />
     </label>
+    
 
     <label>
       Desconto (%):
