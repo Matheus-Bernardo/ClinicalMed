@@ -26,8 +26,9 @@ export class SidebarPatientComponent {
 
     }
   }
-   gotoDetailsClient(): void {
-    this.router.navigate(['/info-patient']);
+  
+  gotoDetailsClient(): void {
+    this.router.navigate(['/info-user']);
   }
 
   
