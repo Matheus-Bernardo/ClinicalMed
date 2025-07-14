@@ -1,9 +1,8 @@
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { addWeeks, subWeeks } from 'date-fns';
-import { CommonModule } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
-import { CalendarEvent, CalendarModule, } from 'angular-calendar';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CalendarEvent, CalendarModule } from 'angular-calendar';
 import { environmentVersion } from '../../../environments/version';
 import { getDoctorsService } from '../../../Services/getDoctors.service';
 import { getPatientsService } from '../../../Services/getPatients.service';
@@ -12,7 +11,6 @@ import { getConsultsMedicalService } from '../../../Services/getConsultMedical.s
 import { CreateConsultMedicalService } from '../../../Services/createConsultMedical.service';
 import { SidebarDoctorComponent } from '../../shared/sidebar-doctor/sidebar-doctor.component';
 import { getTypeAppointmentService } from '../../../Services/getTypeAppointmentMedical.service';
-
 
 @Component({
   selector: 'app-create-consult',
@@ -26,8 +24,6 @@ import { getTypeAppointmentService } from '../../../Services/getTypeAppointmentM
   templateUrl: './create-consult.component.html',
   styleUrl: './create-consult.component.scss'
 })
-
-
 export class CreateConsultComponent implements OnInit {
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
@@ -35,6 +31,7 @@ export class CreateConsultComponent implements OnInit {
   isSidebarExpanded = true;
   version = environmentVersion.version;
   visible = false;
+  isLoading = false; 
 
   doctorId: any;
   patientID: any;
@@ -51,7 +48,8 @@ export class CreateConsultComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     @Inject(LOCALE_ID) public locale: string,
-    @Inject(PLATFORM_ID) private platformId: Object,) { }
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) { }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -65,7 +63,7 @@ export class CreateConsultComponent implements OnInit {
       }
     }
 
-    this.loadConsults()
+    this.loadConsults();
     this.loadTypesAppointment();
     this.loadDoctors();
     this.loadPatients();
@@ -94,23 +92,21 @@ export class CreateConsultComponent implements OnInit {
       console.error("Erro ao carregar lista de pacientes no componente", error);
     }
   }
-  
+
   async loadConsults() {
-  try {
-    const consults = await getConsultsMedicalService();
-    this.events = consults.map((c:any) => ({
-      title: `Ocupado`,
-      start: new Date(c.consultationTime),
-      end: new Date(new Date(c.consultationTime).getTime() + 60 * 60 * 1000),
-      color: { primary: '#800000', secondary: '#FA8072' },
-    }));
-  } catch (error) {
-    console.error('Erro ao carregar consultas:', error);
-    this.toastr.error('Erro ao carregar consultas');
+    try {
+      const consults = await getConsultsMedicalService();
+      this.events = consults.map((c: any) => ({
+        title: `Ocupado`,
+        start: new Date(c.consultationTime),
+        end: new Date(new Date(c.consultationTime).getTime() + 60 * 60 * 1000),
+        color: { primary: '#800000', secondary: '#FA8072' },
+      }));
+    } catch (error) {
+      console.error('Erro ao carregar consultas:', error);
+      this.toastr.error('Erro ao carregar consultas');
+    }
   }
-}
-
-
 
   nextWeek(): void {
     this.viewDate = addWeeks(this.viewDate, 1);
@@ -123,12 +119,13 @@ export class CreateConsultComponent implements OnInit {
   today(): void {
     this.viewDate = new Date();
   }
+
   handleHourSegmentClick(event: any) {
     this.selectedDate = event.date;
     this.visible = true;
   }
 
-  saveEvent() {
+  async saveEvent() {
     if (!this.selectedTypeAppointmentId) {
       alert('Selecione o tipo de atendimento.');
       return;
@@ -143,19 +140,11 @@ export class CreateConsultComponent implements OnInit {
     let patientIdToSend: number | null = null;
 
     if (this.roleuserActivite === 'doctor') {
-      // doctor logged
       doctorIdToSend = Number(this.doctorId);
-      patientIdToSend = this.patientID
-        ? Number(this.patientID)
-        : Number(this.patientID);
+      patientIdToSend = this.patientID ? Number(this.patientID) : null;
     } else {
-      // Patient logged
-      doctorIdToSend = this.doctorId
-        ? Number(this.doctorId)
-        : null;
-      patientIdToSend = this.patientID
-        ? Number(this.patientID)
-        : null;
+      doctorIdToSend = this.doctorId ? Number(this.doctorId) : null;
+      patientIdToSend = this.patientID ? Number(this.patientID) : null;
     }
 
     const scheduling = {
@@ -166,17 +155,20 @@ export class CreateConsultComponent implements OnInit {
       agreementDiscount: this.descont ?? 0
     };
 
-    console.log('Dados prontos para envio na API:', scheduling);
-    const response = CreateConsultMedicalService(scheduling).then((res) => {
+    
+    this.isLoading = true;
+
+    try {
+      await CreateConsultMedicalService(scheduling);
+      this.loadConsults();
       this.toastr.success('Consulta agendada com sucesso!');
-    })
-      .catch((error) => {
-        this.toastr.error(error, 'Erro ao criar consulta');
-      })
-
-    this.visible = false;
+      this.visible = false;
+    } catch (error:any) {
+      this.toastr.error(error, 'Erro ao criar consulta');
+    } finally {
+      this.isLoading = false;
+    }
   }
-
 
   toggleSidebar() {
     this.isSidebarExpanded = !this.isSidebarExpanded;

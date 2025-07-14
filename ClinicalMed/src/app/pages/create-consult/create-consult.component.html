@@ -21,9 +21,14 @@
   </div>
 </div>
 
-<!-- Modal Customizado -->
+<!-- Modal -->
 <div *ngIf="visible" class="custom-modal-overlay">
   <div class="custom-modal">
+    <!-- LOADER -->
+    <div *ngIf="isLoading" class="loader-overlay">
+      <div class="spinner"></div>
+    </div>
+
     <h3>Novo Agendamento</h3>
     <p>Preencha as informações abaixo:</p>
 
@@ -52,7 +57,6 @@
       </select>
     </label>
 
-
     <label *ngIf="roleuserActivite === 'doctor'">
       Escolha um paciente:
       <select [(ngModel)]="patientID">
@@ -67,7 +71,6 @@
       Paciente:
       <input type="text" [(ngModel)]="patientName" disabled />
     </label>
-    
 
     <label>
       Desconto (%):
