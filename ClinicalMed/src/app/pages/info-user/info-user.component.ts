@@ -7,12 +7,13 @@ import { updateDoctorService } from '../../../Services/updateDoctor.service';
 import { updatePatientService } from '../../../Services/updatePatient.service';
 import { getDoctorByIdService } from '../../../Services/getDoctorById.service';
 import { getPatientByIdService } from '../../../Services/getPatientById.service';
+import { SidebarDoctorComponent } from '../../shared/sidebar-doctor/sidebar-doctor.component';
 import { SidebarPatientComponent } from '../../shared/sidebar-patient/sidebar-patient.component';
 
 @Component({
   selector: 'app-info-user',
   standalone: true,
-  imports: [SidebarPatientComponent, ReactiveFormsModule, CommonModule],
+  imports: [SidebarPatientComponent, ReactiveFormsModule, CommonModule, SidebarDoctorComponent],
   templateUrl: './info-user.component.html',
   styleUrls: ['./info-user.component.scss']
 })
