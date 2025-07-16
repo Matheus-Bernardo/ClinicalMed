@@ -1,5 +1,12 @@
 <form *ngIf="formSelected" [formGroup]="formSelected" (ngSubmit)="onSubmit()" class="container__infos">
-  <app-sidebar-patient></app-sidebar-patient>
+  
+  <ng-container *ngIf="roleUser === 'doctor'">
+    <app-sidebar-doctor></app-sidebar-doctor>
+  </ng-container>
+
+  <ng-container *ngIf="roleUser != 'doctor'">
+    <app-sidebar-patient></app-sidebar-patient>
+  </ng-container>
 
   <div class="content">
     <h1>

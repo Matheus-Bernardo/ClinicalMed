@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr'; 
-import { loginUser } from '../../../Services/auth.service';
+import { loginUser } from '../../../Services/login.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -34,6 +34,8 @@ export class LoginComponent {
 
     const { email, password, typeUser: rawTypeUser } = this.loginForm.value;
     const typeUser = rawTypeUser === false ? 1 : 2;
+    console.log('DEBUG: rawTypeUser:', rawTypeUser);
+    console.log('DEBUG: typeUser:', typeUser);
   
     const response = loginUser(email, password, typeUser)
       .then((res) => {
@@ -46,8 +48,13 @@ export class LoginComponent {
         }
       })
       .catch((error) => {         
-          this.toastr.error(error,'Erro ao fazer login');
-          this.isLoading = false;
+        if(error.message === "Dados inválidos."){
+          this.toastr.error("senha ou email incorretos!",'Erro ao fazer login');
+        }else{
+          console.log(error.message)
+          this.toastr.error("Tente novamente mais tarde",'Servidor Indisponível');
+        }
+        this.isLoading = false;
       });
 
   }

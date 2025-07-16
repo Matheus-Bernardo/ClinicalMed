@@ -1,5 +1,13 @@
 <div class="welcome-container" [class.sidebar-expanded]="isSidebarExpanded">
-  <app-sidebar-doctor [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-doctor>
+  <ng-container *ngIf="roleuserActivite === 'doctor'">
+    <app-sidebar-doctor [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-doctor>
+  </ng-container>
+
+  <ng-container *ngIf="roleuserActivite != 'doctor'">
+    <app-sidebar-patient [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-patient>
+  </ng-container>
+  
+  
 
   <div class="main-content">
     <div class="calendar-container">

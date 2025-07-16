@@ -11,6 +11,7 @@ import { getConsultsMedicalService } from '../../../Services/getConsultMedical.s
 import { CreateConsultMedicalService } from '../../../Services/createConsultMedical.service';
 import { SidebarDoctorComponent } from '../../shared/sidebar-doctor/sidebar-doctor.component';
 import { getTypeAppointmentService } from '../../../Services/getTypeAppointmentMedical.service';
+import { SidebarPatientComponent } from '../../shared/sidebar-patient/sidebar-patient.component';
 
 @Component({
   selector: 'app-create-consult',
@@ -20,7 +21,8 @@ import { getTypeAppointmentService } from '../../../Services/getTypeAppointmentM
     CommonModule,
     CalendarModule,
     SidebarDoctorComponent,
-  ],
+    SidebarPatientComponent
+],
   templateUrl: './create-consult.component.html',
   styleUrl: './create-consult.component.scss'
 })

@@ -27,6 +27,10 @@ export class SidebarPatientComponent {
     }
   }
   
+  goToWelcomePatient():void{
+    this.router.navigate(['/welcomePatient']);
+  }
+
   gotoDetailsClient(): void {
     this.router.navigate(['/info-user']);
   }

@@ -9,21 +9,21 @@
       </button>
 
       <ul>
-        <li>
-          <span class="icon">🏠</span>
-          <span *ngIf="isExpanded"> Início </span>
+        <li (click)="goToWelcomePatient()">
+          <span class="icon" >🏠</span>
+          <span *ngIf="isExpanded" > Início </span>
         </li>
-        <li>
+        <li (click)="gotoDetailsClient()">
           <span class="icon">👤</span>
-          <span *ngIf="isExpanded" (click)="gotoDetailsClient()"> Perfil </span>
+          <span *ngIf="isExpanded" > Perfil </span>
         </li>
         <li>
           <span class="icon">📅</span>
           <span *ngIf="isExpanded"> Consultas </span>
         </li>
-        <li>
+        <li (click)="exitSystem()">
           <span class="icon">🚪</span>
-          <span *ngIf="isExpanded" (click)="exitSystem()"> Sair </span>
+          <span *ngIf="isExpanded" > Sair </span>
         </li>
       </ul>
     </div>

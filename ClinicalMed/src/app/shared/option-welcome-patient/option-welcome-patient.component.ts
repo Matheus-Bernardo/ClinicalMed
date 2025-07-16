@@ -1,4 +1,5 @@
 import { Component,Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,8 +10,9 @@ import { Component,Input } from '@angular/core';
 })
 export class OptionWelcomePatientComponent {
 
-   
-
-  
+  constructor(private router:Router){}
+  navigateToCreateConsult(){
+    this.router.navigate(['/create-consult'])
+  }
 
 }

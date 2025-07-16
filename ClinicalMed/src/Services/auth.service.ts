@@ -1,19 +1,23 @@
-import { login } from '../api/endpoints/auth.api';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { urlApi } from '../environments/urlApi';
 
-export async function loginUser(email: string, password: string, typeUser: number) {
-    try {
-        const response = await login({ email, password, typeUser });
-        localStorage.setItem('name',response.data.firstName)
-        localStorage.setItem('id',response.data.id)
-        localStorage.setItem('role',response.data.role)
-        return response.data;
-    } catch (error: any) {
-        if (error.response?.status === 400) {
-            throw new Error(error.response.data || 'Dados inválidos.');
-        } else {
-            console.error('Erro inesperado:', error);
-            throw new Error('Erro inesperado. Tente novamente mais tarde.');
-        }
+export interface UserProfile {
+  authenticated: boolean;
+  role: string;
+}
 
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private profileSubject = new BehaviorSubject<UserProfile | null>(null);
+  constructor(private http: HttpClient) {}
+
+  getProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${urlApi.BASEURL}/auth/me`, {
+      withCredentials: true
+    });
+  }
 }
