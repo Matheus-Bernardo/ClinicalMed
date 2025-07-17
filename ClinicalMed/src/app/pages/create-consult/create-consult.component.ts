@@ -48,9 +48,9 @@ export class CreateConsultComponent implements OnInit {
   roleuserActivite: string | null = localStorage.getItem("role");
 
   constructor(
-    private toastr: ToastrService,
+    private readonly toastr: ToastrService,
     @Inject(LOCALE_ID) public locale: string,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
   ) { }
 
   ngOnInit(): void {

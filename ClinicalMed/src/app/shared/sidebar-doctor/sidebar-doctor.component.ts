@@ -15,7 +15,7 @@ export class SidebarDoctorComponent {
 
   idDoctor:number|null = null;
 
-  constructor(private router:Router){}
+  constructor(private readonly router:Router){}
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class OptionWelcomeDoctorComponent {
 
-  constructor(private router:Router){}
+  constructor(private readonly router:Router){}
 
   navigateToCreateConsult(){
     this.router.navigate(['/create-consult'])

@@ -16,7 +16,7 @@ export class SidebarPatientComponent {
 
   idPatient:number|null = null;
 
-  constructor(private router: Router){
+  constructor(private readonly router: Router){
     
   }
   ngOnInit(): void {

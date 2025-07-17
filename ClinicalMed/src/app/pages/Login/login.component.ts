@@ -17,9 +17,9 @@ export class LoginComponent {
   isLoading = false;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    private router: Router
+    private readonly formBuilder: FormBuilder,
+    private readonly toastr: ToastrService,
+    private readonly router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: [''],
@@ -37,7 +37,7 @@ export class LoginComponent {
     console.log('DEBUG: rawTypeUser:', rawTypeUser);
     console.log('DEBUG: typeUser:', typeUser);
   
-    const response = loginUser(email, password, typeUser)
+    loginUser(email, password, typeUser)
       .then((res) => {
         
         this.toastr.success('Login realizado com sucesso!');

@@ -1,8 +1,9 @@
+import {logout} from '../api/endpoints/logout.api'
 export async function Logout() {
     try {
-        localStorage.removeItem('token');
-        localStorage.removeItem('name');
+        await logout();
+        localStorage.clear();
     } catch (error) {
-        console.error('Erro ao fazer logout',error);
+        console.error('Erro ao fazer logout', error);
     }
 }

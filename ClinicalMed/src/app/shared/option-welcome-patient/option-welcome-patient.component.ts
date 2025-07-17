@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class OptionWelcomePatientComponent {
 
-  constructor(private router:Router){}
+  constructor(private readonly router:Router){}
   navigateToCreateConsult(){
     this.router.navigate(['/create-consult'])
   }

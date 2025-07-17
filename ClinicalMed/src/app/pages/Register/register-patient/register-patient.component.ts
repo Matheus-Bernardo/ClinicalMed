@@ -1,12 +1,11 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { CreatePatient } from '../../../../Services/registerPatient.service';
-import { ICreatePatient } from '../../../../Intefaces/Patient/PatientRegister';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { CreatePatient } from '../../../../Services/registerPatient.service';
+import { ICreatePatient } from '../../../../Intefaces/Patient/PatientRegister';
+import { FormBuilder, ReactiveFormsModule, Validators,FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-register-patient',
@@ -26,9 +25,9 @@ export class RegisterPatientComponent {
   isLoading = false;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    private router: Router
+    private readonly formBuilder: FormBuilder,
+    private readonly toastr: ToastrService,
+    private readonly router: Router
   ) {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -55,7 +54,7 @@ export class RegisterPatientComponent {
     this.isLoading = true;
     const dataToSend = this.mapFormToPatientData();
 
-    const response = CreatePatient(dataToSend).then((res) => {
+    CreatePatient(dataToSend).then((res) => {
       this.toastr.success('Cadastro realizado com sucesso!');
       this.registerForm.reset()
     })

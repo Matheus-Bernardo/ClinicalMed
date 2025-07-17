@@ -12,8 +12,8 @@ export interface UserProfile {
   providedIn: 'root'
 })
 export class AuthService {
-  private profileSubject = new BehaviorSubject<UserProfile | null>(null);
-  constructor(private http: HttpClient) {}
+  private readonly profileSubject = new BehaviorSubject<UserProfile | null>(null);
+  constructor(private readonly http: HttpClient) {}
 
   getProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(`${urlApi.BASEURL}/auth/me`, {

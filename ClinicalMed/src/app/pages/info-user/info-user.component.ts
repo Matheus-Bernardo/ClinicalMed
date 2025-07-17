@@ -101,11 +101,11 @@ export class InfoUserComponent implements OnInit {
 
       try {
         if (this.roleUser === 'doctor') {
-          const response = await updateDoctorService(id,payload);
+          await updateDoctorService(id,payload);
           localStorage.setItem('name',payload.firstName);
           this.toastr.success('Informações atualizadas com sucesso!');
         } else {
-          const response = await updatePatientService(id, payload);
+          await updatePatientService(id, payload);
           localStorage.setItem('name',payload.firstName);
           this.toastr.success('As suas informações foram atualizadas com sucesso!');
         }
