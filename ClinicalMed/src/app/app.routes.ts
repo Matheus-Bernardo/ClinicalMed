@@ -8,10 +8,12 @@ import { CreateConsultComponent } from './pages/create-consult/create-consult.co
 import { WelcomeDoctorComponent } from './pages/Doctor/welcome-doctor/welcome-doctor.component';
 import { WelcomePatientComponent } from './pages/Patient/welcome-patient/welcome-patient.component';
 import { RegisterPatientComponent } from './pages/Register/register-patient/register-patient.component';
+import { ListConsultUserComponent } from './pages/list-consult-user/list-consult-user.component';
 
 // Rotas públicas
 const publicRoutes: Routes = [
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  { path: 'ListConsultUser', component: ListConsultUserComponent, pathMatch: 'full' },
   { path: 'register', component: RegisterPatientComponent, pathMatch: 'full' },
 ];
 

@@ -1,0 +1,73 @@
+<div class="list_container">
+
+  <!-- SIDEBAR DOCTOR OR PATIENT -->
+  <ng-container *ngIf="roleuserActivite === 'doctor'">
+    <app-sidebar-doctor [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-doctor>
+  </ng-container>
+
+  <ng-container *ngIf="roleuserActivite !== 'doctor'">
+    <app-sidebar-patient [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-patient>
+  </ng-container>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="list_container_session">
+
+    <!-- MODAL DE CHAMADA JITSI -->
+    <div *ngIf="selectedRoomUrl" class="modal-jitsi">
+      <div class="modal-content">
+        <button mat-icon-button class="close-button" (click)="closeConsult()" aria-label="Fechar">
+          <mat-icon>close</mat-icon>
+        </button>
+        <app-jitsi-iframe [meetingUrl]="selectedRoomUrl"></app-jitsi-iframe>
+      </div>
+    </div>
+
+    <!-- TÍTULO -->
+    <h1>{{ nameuserActivite }}, veja seus agendamentos na listagem abaixo</h1>
+
+    <!-- TABELA DE CONSULTAS -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+
+      <!-- COLUNAS -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>Consulta</th>
+        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="doctor">
+        <th mat-header-cell *matHeaderCellDef>Médico</th>
+        <td mat-cell *matCellDef="let element">{{ element.doctor }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="patient">
+        <th mat-header-cell *matHeaderCellDef>Paciente</th>
+        <td mat-cell *matCellDef="let element">{{ element.patient }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="hourConsult">
+        <th mat-header-cell *matHeaderCellDef>Horário da consulta</th>
+        <td mat-cell *matCellDef="let element">{{ element.hourConsult }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status da consulta</th>
+        <td mat-cell *matCellDef="let element">{{ element.status | statusLabel }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="link">
+        <th mat-header-cell *matHeaderCellDef>Ação</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-stroked-button color="accent" (click)="openConsult(element.link)">
+            <mat-icon>videocam</mat-icon>
+            Acessar consulta
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- CABEÇALHO E LINHAS -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+</div>

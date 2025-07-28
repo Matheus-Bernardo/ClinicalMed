@@ -1,0 +1,81 @@
+::ng-deep .custom-table {
+  background-color: #e8f5e9; // verde claro de fundo da tabela
+  color: #2e7d32;            // texto verde escuro
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .custom-table .mat-header-cell {
+  background-color: #4caf50; // verde principal
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+}
+
+::ng-deep .custom-table .mat-cell {
+  border-bottom: 1px solid #a5d6a7;
+  text-align: center;
+}
+
+::ng-deep .custom-table .mat-row:hover {
+  background-color: #c8e6c9; // hover verde claro
+  cursor: pointer;
+}
+
+::ng-deep .mat-elevation-z8 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.list_container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+
+  .list_container_session {
+    width: 100%;
+    padding: 1rem;
+
+     h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      color: #2e7d32;
+    }
+
+    table {
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+}
+.modal-jitsi {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1001;
+}
