@@ -8,8 +8,6 @@ export const doctorGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  console.log('doctorGuard: ativado');
-
   return authService.getProfile().pipe(
      map(profile => {
       if (profile.authenticated && profile.role === 'doctor') {
