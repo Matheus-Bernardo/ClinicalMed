@@ -79,3 +79,51 @@
   right: 8px;
   z-index: 1001;
 }
+::ng-deep .custom-table .mat-cell.mat-column-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px; 
+}
+
+.status-select-field {
+  margin-top: 5%;
+  width: 160px;
+  font-size: 14px;
+}
+
+.status-select-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+  margin: 0;
+}
+
+.status-select-field .mat-select {
+  padding-left: 8px;
+}
+
+::ng-deep .mat-select-panel {
+  max-width: 160px !important; 
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.modal-box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}

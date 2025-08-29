@@ -1,18 +1,12 @@
 <div class="list_container">
-
-  <!-- SIDEBAR DOCTOR OR PATIENT -->
   <ng-container *ngIf="roleuserActivite === 'doctor'">
     <app-sidebar-doctor [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-doctor>
   </ng-container>
-
   <ng-container *ngIf="roleuserActivite !== 'doctor'">
     <app-sidebar-patient [isExpanded]="isSidebarExpanded" [version]="version"></app-sidebar-patient>
   </ng-container>
 
-  <!-- CONTEÚDO PRINCIPAL -->
   <div class="list_container_session">
-
-    <!-- MODAL DE CHAMADA JITSI -->
     <div *ngIf="selectedRoomUrl" class="modal-jitsi">
       <div class="modal-content">
         <button mat-icon-button class="close-button" (click)="closeConsult()" aria-label="Fechar">
@@ -22,28 +16,21 @@
       </div>
     </div>
 
-    <!-- TÍTULO -->
     <h1>{{ nameuserActivite }}, veja seus agendamentos na listagem abaixo</h1>
 
-    <!-- TABELA DE CONSULTAS -->
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
-
-      <!-- COLUNAS -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef>Consulta</th>
         <td mat-cell *matCellDef="let element">{{ element.position }}</td>
       </ng-container>
-
       <ng-container matColumnDef="doctor">
         <th mat-header-cell *matHeaderCellDef>Médico</th>
         <td mat-cell *matCellDef="let element">{{ element.doctor }}</td>
       </ng-container>
-
       <ng-container matColumnDef="patient">
         <th mat-header-cell *matHeaderCellDef>Paciente</th>
         <td mat-cell *matCellDef="let element">{{ element.patient }}</td>
       </ng-container>
-
       <ng-container matColumnDef="hourConsult">
         <th mat-header-cell *matHeaderCellDef>Horário da consulta</th>
         <td mat-cell *matCellDef="let element">{{ element.hourConsult }}</td>
@@ -51,7 +38,20 @@
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status da consulta</th>
-        <td mat-cell *matCellDef="let element">{{ element.status | statusLabel }}</td>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="roleuserActivite === 'doctor'; else patientStatusLabel">
+            <mat-form-field appearance="fill" class="status-select-field">
+              <mat-select [value]="element.status" (selectionChange)="updateConsultStatus(element, $event.value)">
+                <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+                  {{ option.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+          <ng-template #patientStatusLabel>
+            <span>{{ element.status | statusLabel }}</span>
+          </ng-template>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="link">
@@ -64,10 +64,20 @@
         </td>
       </ng-container>
 
-      <!-- CABEÇALHO E LINHAS -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
     </table>
   </div>
 </div>
+
+<div *ngIf="showPrescriptionModal" class="modal-overlay">
+  <app-modal-prescription
+    [doctorName]="selectedElement!.doctor"
+    [patientName]="selectedElement!.patient"
+    (confirmed)="onPrescriptionConfirmed($event)"
+    (canceled)="closePrescriptionModal()"
+  ></app-modal-prescription>
+</div>
+
+
+
