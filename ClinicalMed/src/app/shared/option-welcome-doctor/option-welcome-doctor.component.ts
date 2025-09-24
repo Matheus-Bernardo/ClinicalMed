@@ -14,4 +14,8 @@ export class OptionWelcomeDoctorComponent {
   navigateToCreateConsult(){
     this.router.navigate(['/create-consult'])
   }
+
+    navigateToListConsults(){
+    this.router.navigate(['/ListConsultUser'])
+  }
 }

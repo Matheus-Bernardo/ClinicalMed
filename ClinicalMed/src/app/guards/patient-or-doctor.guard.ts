@@ -4,13 +4,13 @@ import { map, catchError } from 'rxjs/operators';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const patientORDoctorGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
   return authService.getProfile().pipe(
      map(profile => {
-      if (profile.authenticated) {
+      if (profile.authenticated && (profile.role === 'patient' || profile.role === 'doctor')) {
         return true;
       } else {
         return router.createUrlTree(['/login']);
@@ -20,4 +20,5 @@ export const authGuard: CanActivateFn = (route, state) => {
       return of(router.createUrlTree(['/login']));
     })
   );
+
 };

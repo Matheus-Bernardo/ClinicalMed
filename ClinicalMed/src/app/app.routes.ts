@@ -3,11 +3,13 @@ import { authGuard } from './guards/auth.guard';
 import { doctorGuard } from './guards/doctor.guard';
 import { patientGuard } from './guards/patient.guard';
 import { LoginComponent } from './pages/Login/login.component';
+import { patientORDoctorGuard } from './guards/patient-or-doctor.guard';
 import { InfoUserComponent } from './pages/info-user/info-user.component';
 import { CreateConsultComponent } from './pages/create-consult/create-consult.component';
 import { WelcomeDoctorComponent } from './pages/Doctor/welcome-doctor/welcome-doctor.component';
 import { WelcomePatientComponent } from './pages/Patient/welcome-patient/welcome-patient.component';
 import { RegisterPatientComponent } from './pages/Register/register-patient/register-patient.component';
+import { ListConsultUserComponent } from './pages/list-consult-user/list-consult-user.component';
 
 // Rotas públicas
 const publicRoutes: Routes = [
@@ -30,11 +32,20 @@ const privateDoctorRoutes: Routes = [
   { path: 'welcomeDoctor', component: WelcomeDoctorComponent, canActivate: [doctorGuard],pathMatch: 'full' },
 ];
 
+
+// Rotas privadas específicas para doctor ou patient
+const privatePatientOrDoctorRoutes: Routes = [
+    { path: 'ListConsultUser', component: ListConsultUserComponent, canActivate:[patientORDoctorGuard], pathMatch: 'full' },
+];
+
+
+
 // Todas as rotas
 export const routes: Routes = [
   ...publicRoutes,
   ...privateRoutes,
   ...privatePatientRoutes,
   ...privateDoctorRoutes,
+  ...privatePatientOrDoctorRoutes,
   { path: '**', redirectTo: 'login' },
 ];
