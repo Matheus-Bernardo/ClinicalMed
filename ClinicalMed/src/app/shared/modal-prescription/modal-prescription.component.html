@@ -2,51 +2,52 @@
   <h2><span>ClinicalMed</span></h2>
 
   <div class="prescription-header">
-  <p><strong>Médico:</strong> {{ doctorName }}</p>
-  <p><strong>Paciente:</strong> {{ patientName }}</p>
+    <p><strong>Médico:</strong> {{ doctorName }}</p>
+    <p><strong>Paciente:</strong> {{ patientName }}</p>
   </div>
   
   <div class="prescription-body">
-
     <div class="form-group">
       <label>Validade da receita</label>
-      <input type="text" placeholder="Digite a validade em dias da receita">
+      <input type="number" [(ngModel)]="validityPrescription" placeholder="Digite a validade em dias da receita">
     </div>
 
     <div class="form-group">
       <label>CRM do médico</label>
-      <input type="text" placeholder="Digite o CRM">
+      <input type="text" [(ngModel)]="crmDoctor" [disabled]="true">
+
     </div>
 
     <div class="form-group">
       <label>Remédios prescritos</label>
-      <textarea placeholder="Liste os medicamentos"></textarea>
+      <textarea [(ngModel)]="remedyPrescription" placeholder="Liste os medicamentos separados por vírgula"></textarea>
     </div>
 
     <div class="form-inline">
       <div class="form-group">
         <label>Duração (dias)</label>
-        <input type="text" placeholder="Ex: 10">
+        <input type="string" [(ngModel)]="frequency" placeholder="Ex: 10">
       </div>
       <div class="form-group">
         <label>Dosagem</label>
-        <input type="text" placeholder="Ex: 500mg">
+        <input type="text" [(ngModel)]="dosageRemedy" placeholder="Ex: 500mg">
       </div>
     </div>
 
     <div class="form-group">
       <label>Frequência por dia</label>
-      <input type="text" placeholder="Ex: 2 vezes ao dia">
+      <input type="text" [(ngModel)]="frequencyRemedy" placeholder="Ex: 2 vezes ao dia">
     </div>
 
     <div class="form-group">
       <label>Instruções adicionais</label>
-      <textarea placeholder="Orientações médicas extras"></textarea>
+      <textarea [(ngModel)]="observation" placeholder="Orientações médicas extras"></textarea>
     </div>
   </div>
 
   <div class="prescription-footer">
-    <button mat-raised-button color="primary" (click)="confirm()">Confirmar</button>
+    <button mat-raised-button color="primary" (click)="finishWithPrescription()">Finalizar com receita</button>
+    <button mat-raised-button color="accent" (click)="finishWithoutPrescription()">Finalizar sem receita</button>
     <button mat-button color="warn" (click)="cancel()">Cancelar</button>
   </div>
 </div>

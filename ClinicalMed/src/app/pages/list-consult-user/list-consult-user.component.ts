@@ -15,7 +15,8 @@ import { ModalPrescriptionComponent } from '../../shared/modal-prescription/moda
 
 export interface PeriodicElement {
   doctor: string;
-  position: number;
+  crmDoctorID: string;
+  consultID: number;
   patient: string;
   hourConsult: string;
   status: string;
@@ -23,6 +24,8 @@ export interface PeriodicElement {
 }
 
 interface ApiConsultResponse {
+  consultationId: number;
+  crmDoctor: string;
   typeAppointment: string;
   doctorName: string;
   patientName: string;
@@ -57,7 +60,7 @@ export class ListConsultUserComponent implements OnInit {
   version = environmentVersion.version;
   isLoading = false;
 
-  displayedColumns: string[] = ['position', 'doctor', 'patient', 'hourConsult', 'status', 'link'];
+  displayedColumns: string[] = ['consultID','crmDoctorID','doctor', 'patient', 'hourConsult', 'status', 'link'];
   dataSource: PeriodicElement[] = [];
 
   roleuserActivite: string | null = null;
@@ -94,7 +97,8 @@ export class ListConsultUserComponent implements OnInit {
       const response: ApiConsultResponse[] = await getConsultByUserService(id);
 
       this.dataSource = response.map((item, index) => ({
-        position: index + 1,
+        consultID: item.consultationId,
+        crmDoctorID:`${item.crmDoctor}`,
         doctor: `${item.doctorName}`,
         patient: item.patientName,
         hourConsult: new Date(item.consultationTime).toLocaleString('pt-BR'),
